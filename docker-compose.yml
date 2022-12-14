@@ -15,7 +15,6 @@ x-log-config: &log-config
   # update this value to *loki if needed to see logs in grafana dashboard.
   <<: *default
 
-
 services:
 
   proxy:
@@ -43,7 +42,7 @@ services:
 
   openelis:
     profiles: ['default', 'openelis']
-    image: 'bahmni/openelis:${OPENELIS_IMAGE_TAG:?[ERROR]}'
+    image: 'infoiplitin/openelis:${OPENELIS_IMAGE_TAG:?[ERROR]}'
     ports:
       - '8052:8052'
     volumes:
@@ -87,7 +86,7 @@ services:
       - odooappdata:/var/lib/odoo
       - ${EXTRA_ADDONS_PATH}:/mnt/extra-addons
       # # Uncomment the below volume only when you need to modify existing bahmni-addons. Also make sure to update the .env file variable with odoo-modules github repo cloned path.
-      # - ${BAHMNI_ODOO_MODULES_PATH}:/opt/bahmni-erp/bahmni-addons
+      - ${BAHMNI_ODOO_MODULES_PATH}:/opt/bahmni-erp/bahmni-addons
     depends_on:
       odoodb:
         condition: service_healthy
@@ -288,7 +287,7 @@ services:
       - '33006:3306'
 
   bahmni-web:
-    image: bahmni/bahmni-web:${BAHMNI_WEB_IMAGE_TAG:?}
+    image: infoiplitin/bahmni-web:${BAHMNI_WEB_IMAGE_TAG:?}
     profiles: ['default', 'openmrs']
     volumes:
       - "${CONFIG_VOLUME:?}:/usr/local/apache2/htdocs/bahmni_config/:ro"
