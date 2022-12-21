@@ -269,7 +269,7 @@
 				let url = '/';
 				if (window.location.host === "localhost") {
 					if (app.name === "odoo")
-						url = `http://${window.location.host}:8069`;
+						url = 'http://rtlstaging.bahmni.in:8069/web/login';
 					else
 						url = `http://${window.location.host}:81`;
 				} else if (app.linkPrefix) {
@@ -278,6 +278,8 @@
 						`//${app.linkPrefix}-` +
 						window.location.host;
 				}
+				if (app.name === "odoo")
+					url = 'http://rtlstaging.bahmni.in:8069/web/login';
 				return url;
 			}
 
@@ -294,7 +296,7 @@
 							if (app.enabled) {
 								sections.innerHTML += `<div class="section">
 			                             <div class="launch">
-			                                 <a href="${getAppLink(app)}">
+			                                 <a href="${getAppLink(app)}" target="_blank">
 			                                 <img src="${app.logo}" />
 			                                 <span> ${app.title}</span>
 			                                 </a>
