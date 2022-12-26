@@ -22,6 +22,7 @@ services:
     volumes:
       # - ${CERTIFICATE_PATH}:/etc/tls
       - 'bahmni-patient-images:/home/bahmni/patient_images'
+      - 'bahmni-document-images:/home/bahmni/document_images'
     ports:
       - '80:80'
       - '443:443'
@@ -171,7 +172,7 @@ services:
       - '8080:8080'
       # - ${OMRS_DEV_DEBUG_PORT}:${OMRS_DEV_DEBUG_PORT}
     volumes:
-      - 'openmrs-data:/openmrs/data/modules'
+      # - 'openmrs-data:/openmrs/data/modules'
       - "${CONFIG_VOLUME:?}:/etc/bahmni_config/:ro"
       # - "${BAHMNI_OPENMRS_MODULES_PATH:?}/:/openmrs/data/modules/"
       - 'bahmni-patient-images:/home/bahmni/patient_images'
@@ -291,8 +292,8 @@ services:
     profiles: ['default', 'openmrs']
     volumes:
       - "${CONFIG_VOLUME:?}:/usr/local/apache2/htdocs/bahmni_config/:ro"
-    #   - "${BAHMNI_APPS_PATH:?}/ui/app/:/usr/local/apache2/htdocs/bahmni"
-    #   - "${BAHMNI_APPS_PATH:?}/ui/node_modules/@bower_components/:/usr/local/apache2/htdocs/bahmni/components"
+      # - "${BAHMNI_APPS_PATH:?}/ui/app/:/usr/local/apache2/htdocs/bahmni"
+      # - "${BAHMNI_APPS_PATH:?}/ui/node_modules/@bower_components/:/usr/local/apache2/htdocs/bahmni/components"
     logging: *log-config
 
   implementer-interface:
@@ -347,7 +348,7 @@ services:
       - '8099:80'
     profiles: ["default","openmrs"]
     volumes:
-      - 'bahmni-document-images:/usr/share/nginx/html/document_images'
+      - 'bahmni-document-images:/usr/share/nginx/html/document_images:rw'
     environment:
       - OPENMRS_HOST=${OPENMRS_HOST:?}
     depends_on:
@@ -382,10 +383,11 @@ services:
     - grafana-storage:/var/lib/grafana
 
   appointments:
-    image: bahmni/appointments:${APPOINTMENTS_IMAGE_TAG:?}
+    image: infoiplitin/appointments-rtl:${APPOINTMENTS_IMAGE_TAG:?}
     profiles: ["default","appointments"]
-    # volumes:
+    volumes:
     # - "${APPOINTMENTS_PATH:?}/dist/:/usr/local/apache2/htdocs/appointments"
+    - "${CONFIG_VOLUME:?}:/etc/bahmni_config/:ro"
 
   dcm4chee:
     image: bahmni/dcm4chee:${DCM4CHEE_IMAGE_TAG:?}
