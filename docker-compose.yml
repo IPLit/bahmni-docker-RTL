@@ -142,6 +142,9 @@ services:
   openmrs:
     profiles: ["default","openmrs","implementer-interface"]
     image: bahmni/openmrs:${OPENMRS_IMAGE_TAG:?}
+    build:
+      context: .
+      dockerfile: openmrs/package/docker/Dockerfile
     environment:
       OMRS_DB_NAME: ${OPENMRS_DB_NAME:?}
       OMRS_DB_HOSTNAME: ${OPENMRS_DB_HOST:?}
