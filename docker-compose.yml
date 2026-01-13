@@ -431,7 +431,7 @@ services:
       - 'dcm4chee-archive:/var/lib/bahmni/dcm4chee/server/default/archive'
       - 'dcm4chee-config:/var/lib/bahmni/dcm4chee/server/default/data/xmbean-attrs'
     logging: *log-config
-    restart: ${RESTART_POLICY}
+    restart: unless-stopped
 
   pacs-integration:
     image: bahmni/pacs-integration:${PACS_INTEGRATION_IMAGE_TAG:?}
@@ -448,7 +448,7 @@ services:
       OPENMRS_ATOMFEED_USER: ${OPENMRS_ATOMFEED_USER:?}
       OPENMRS_ATOMFEED_PASSWORD: ${OPENMRS_ATOMFEED_PASSWORD:?}
     logging: *log-config
-    restart: ${RESTART_POLICY}
+    restart: unless-stopped
 
   pacsdb:
     image: postgres:9.6
@@ -466,7 +466,7 @@ services:
       - '${PWD}/init_pacs_dbs.sh:/docker-entrypoint-initdb.d/init_pacs_dbs.sh'
       - 'pacsdbdata:/var/lib/postgresql/data'
     logging: *log-config
-    restart: ${RESTART_POLICY}
+    restart: unless-stopped
 
   pacs-simulator:
     image: bahmni/pacs-simulator:${PACS_SIMULATOR_IMAGE_TAG:?}
@@ -483,7 +483,7 @@ services:
       PACS_INTEGRATION_DB_USERNAME: ${PACS_INTEGRATION_DB_USERNAME:?}
       PACS_INTEGRATION_DB_PASSWORD: ${PACS_INTEGRATION_DB_PASSWORD:?}
     logging: *log-config
-    restart: ${RESTART_POLICY}
+    restart: unless-stopped
 
 
   atomfeed-console:
