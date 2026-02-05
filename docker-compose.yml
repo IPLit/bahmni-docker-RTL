@@ -48,7 +48,7 @@ services:
 
   openelis:
     profiles: ['default', 'openelis']
-    image: 'infoiplitin/openelis:${OPENELIS_IMAGE_TAG:?[ERROR]}'
+    image: 'alexeyyoussef/openelis:${OPENELIS_IMAGE_TAG:?[ERROR]}'
     restart: always
     ports:
       - '8052:8052'
@@ -67,7 +67,7 @@ services:
 
   openelisdb:
     profiles: ['default', 'openelis']
-    image: 'bahmni/openelis-db:${OPENELIS_DB_IMAGE_TAG:?[ERROR]}'
+    image: 'alexeyyoussef/openelis-db-rtl:${OPENELIS_DB_IMAGE_TAG:?[ERROR]}'
     restart: always
     ports:
       - '5432:5432'
@@ -107,7 +107,7 @@ services:
 
   odoodb:
     profiles: ['default', 'odoo']
-    image: 'bahmni/odoo-10-db:${ODOO_DB_IMAGE_TAG:?[ERROR]}'
+    image: 'alexeyyoussef/odoo-10-db-rtl:${ODOO_DB_IMAGE_TAG:?[ERROR]}'
     restart: always
     ports:
       - '5431:5432'
@@ -304,7 +304,7 @@ services:
       # - '33006:3306'
 
   bahmni-web:
-    image: infoiplitin/bahmni-web:${BAHMNI_WEB_IMAGE_TAG:?}
+    image: alexeyyoussef/bahmni-web:${BAHMNI_WEB_IMAGE_TAG:?}
     restart: always
     profiles: ['default', 'openmrs']
     volumes:
@@ -324,7 +324,7 @@ services:
     logging: *log-config
 
   reports:
-    image: infoiplitin/reports-rtl:${REPORTS_IMAGE_TAG:?}
+    image: alexeyyoussef/reports-rtl:${REPORTS_IMAGE_TAG:?}
     restart: always
     profiles: ["default","reports"]
     environment:
@@ -407,7 +407,7 @@ services:
     - grafana-storage:/var/lib/grafana
 
   appointments:
-    image: infoiplitin/appointments-rtl:${APPOINTMENTS_IMAGE_TAG:?}
+    image: alexeyyoussef/appointments-rtl:${APPOINTMENTS_IMAGE_TAG:?}
     restart: always
     profiles: ["default","appointments"]
     volumes:
