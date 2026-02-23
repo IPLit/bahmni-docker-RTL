@@ -226,6 +226,7 @@ docker compose exec -it patient-documents sh
 ```
 
 Install ACL:
+apk add acl
 
 ```bash
 setfacl -dRm o::rwx /usr/share/nginx/html/document_images/
