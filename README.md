@@ -216,6 +216,72 @@ Restart Odoo:
 docker compose restart odoo
 ```
 
+##  📂 Fix: Patient Documents Error (If Occurs Later)
+
+⚠️ Apply only if patient document upload/view errors occur.
+
+```bash
+docker compose exec -it patient-documents sh
+
+```
+
+Install ACL:
+
+```bash
+setfacl -dRm o::rwx /usr/share/nginx/html/document_images/
+chmod -R 777 /usr/share/nginx/html/document_images/
+ls -al /usr/share/nginx/html/document_images/
+```
+
+
+
+```bash
+\q
+exit
+```
+
+Restart patient-documents:
+
+```bash
+docker compose restart patient-documents
+```
+
+## 🛏 Fix: Bed Management Issue (Mandatory)
+
+⚠️ Apply only if Bed Management errors occur.
+
+```bash
+docker compose exec -it openmrsdb sh
+mysql -uroot -padminAdmin!123 openmrs
+```
+
+Run:
+
+```sql
+ALTER TABLE bed_location_map 
+ADD COLUMN row_number INT NULL AFTER location_id;
+
+ALTER TABLE bed_location_map 
+ADD COLUMN column_number INT NULL AFTER row_number;
+
+UPDATE bed_location_map 
+SET row_number = bed_row_number,
+    column_number = bed_column_number;
+```
+
+Exit:
+
+```bash
+\q
+exit
+```
+
+Restart Openmrs:
+
+```bash
+docker compose restart openmrs
+```
+
 ---
 
 ## 🔁 8. Fix: OpenMRS Sync Issue (Markers Table)
